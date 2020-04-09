@@ -264,19 +264,25 @@ public class Game {
                         if (addNodes(previous, node)) {
                             // If they can be added, replace the visited node with null
                             nodes.get(row).set(col, null);
-                            // Next column to move a node to is the one before previous
+                            // Next column to move a node to is the one before next further most location
                             c = previous.getCol() - 1;
                         } else {
                             nodes.get(row).set(col, null);
+                            // 2 nodes couldnt be added
                             if (nodes.get(row).get(c) != null) {
+                                // Move the current node to column next to previous
+                                // New column to move to is now where node was moved
                                 moveNode(row, c-1, node);
                                 c--;
                             } else {
                                 moveNode(row, c, node);
                             }
-                        } previous = nodes.get(row).get(c);
+                        } 
+                        // Since move has occured, update further most node
+                        previous = nodes.get(row).get(c);
                     }
-                } else if (node != null && previous == null) {
+                } // Move current node to be the further most node 
+                else if (node != null && previous == null) {
                     moveNode(row, c, node);
                     nodes.get(row).set(col, null);
                     previous = node;
