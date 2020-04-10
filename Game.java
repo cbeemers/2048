@@ -430,42 +430,30 @@ public class Game {
     public boolean checkGameOver() {
         if (numNodes == 16) {
             // Check first row
-            int r = 0;
-            for (int col=0; col<4; col++){
-                if (col != 3) {
-                    // Check over right and down one
-                    if (isValid(nodes.get(r).get(col), nodes.get(r).get(col+1)) ||
-                        isValid(nodes.get(r+1).get(col), nodes.get(r).get(col))) {
-                        return false;
-                    }
-                } else {
-                    // End of column, just check down 1
-                    if (isValid(nodes.get(r+1).get(col), nodes.get(r).get(col))) {
-                        return false;
+            for (int row=0; row < 3; row++) {
+                for (int col=0; col<4; col++){
+                    if (col != 3) {
+                        // Check over right and down one
+                        if (isValid(nodes.get(row).get(col), nodes.get(row).get(col+1)) ||
+                                isValid(nodes.get(row+1).get(col), nodes.get(row).get(col))) {
+                            return false;
+                        }
+                    } else {
+                        // End of column, just check down 1
+                        if (isValid(nodes.get(row+1).get(col), nodes.get(row).get(col))) {
+                            return false;
+                        }
                     }
                 }
             }
             // Check 3rd row
-            r = 3;
+            int r = 3;
             for (int col=0; col < 4; col++) {
                 if (col != 3) {
-                    if (isValid(nodes.get(r).get(col), nodes.get(r).get(col+1)) ||
-                        isValid(nodes.get(r-1).get(col), nodes.get(r).get(col))) {
+                    if (isValid(nodes.get(r).get(col), nodes.get(r).get(col+1))) {
                         return false;
                     }
-                } else {
-                    if (isValid(nodes.get(r-1).get(col), nodes.get(r).get(col))) {
-                        return false;
-                    }
-                }
-            }
-            // Check middle rows
-            for (int row=1; row<3; row++) {
-                for (int col = 0; col < 3; col++) {
-                    if (isValid(nodes.get(row).get(col), nodes.get(r).get(col+1))) {
-                        return false;
-                    }
-                }
+                } 
             }
             return true;
         }
